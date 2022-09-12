@@ -6,37 +6,43 @@ package HomeWork2.Task2;
 */
 
 
-import java.util.ArrayList;
+import java.util.*;
+
 
 public class Task2 {
 
-    static ArrayList<Integer> twoNumbersWithSum(int[] array, int sum) {
+    static void twoNumbersWithSum(int[] array, int sum) {
 
-        ArrayList<Integer> list = new ArrayList<>();
-        if (array == null || array.length < 2) {
-            return list;
+        if (array == null) {
+            System.out.println("The argument is a null reference!");
+            return;
         }
 
-        int total;
+        if (array.length < 2) {
+            System.out.println("[]");
+            return;
+        }
 
-        OUTER:
-        for (int i = 0; i < array.length; i++) {
-            for (int j = i + 1; j < array.length; j++) {
-                total = array[i];
-                total += array[j];
-                if (total == sum) {
-                    list.add(array[i]);
-                    list.add(array[j]);
-                    break OUTER;
-                }
+        HashSet<Integer> mySet = new HashSet<>();
+        int secondNumber;
+
+        for (int firstNumber : array) {
+            secondNumber = sum - firstNumber;
+            if (mySet.contains(secondNumber)) {
+                System.out.println("[" + firstNumber + ", " + secondNumber + "]");
+                return;
             }
+            mySet.add(secondNumber);
         }
-        return list;
+
+        System.out.println("[]"); // в случае если искомой пары нет
+
+
     }
 
 
     public static void main(String[] args) {
         int[] arr = {3, 4, 2, 7};
-        System.out.println(twoNumbersWithSum(arr, 10));
+        twoNumbersWithSum(arr, 10);
     }
 }
