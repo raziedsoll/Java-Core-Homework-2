@@ -70,38 +70,32 @@ public class Task1 {
 
     /*Отсюда начинается мое решение. Для удобства проверяющих все было сделано в рамках класса Task1.*/
 
-    //Простой exception для задания
-    static class NullArgumentException extends Exception {
-    }
 
     //Метод, который делает необходимые преобразования и выводит на экран результат
     static void preprocessing(Person[] raw_data) {
-        try {
-            Optional.ofNullable(raw_data).orElseThrow(NullArgumentException::new);
-            Map<String, Long> preprocessData = Arrays.stream(raw_data)
-                    .filter(Objects::nonNull)
-                    .filter(person -> Objects.nonNull(person.getName()))
-                    .distinct()
-                    .sorted(Comparator.comparingInt(Person::getId))
-                    .collect(Collectors.groupingBy(Person::getName, Collectors.counting()));
 
-            for (Map.Entry<String, Long> el : preprocessData.entrySet()) {
-                System.out.println("Key " + el.getKey());
-                System.out.println("Value " + el.getValue());
-            }
-
-        } catch (NullArgumentException e) {
-            e.printStackTrace();
-            System.out.println("null reference passed to method");
+        if (raw_data == null) {
+            System.out.println("The argument is a null reference!");
+            return;
         }
+
+        Map<String, Long> preprocessData = Arrays.stream(raw_data)
+                .filter(Objects::nonNull)
+                .filter(person -> Objects.nonNull(person.getName()))
+                .distinct()
+                .sorted(Comparator.comparingInt(Person::getId))
+                .collect(Collectors.groupingBy(Person::getName, Collectors.counting()));
+
+        preprocessData.forEach((key, value) -> {
+            System.out.println("Key: " + key);
+            System.out.println("Value: " + value);
+        });
     }
 
 
     public static void main(String[] args) {
         preprocessing(null);
-
         preprocessing(RAW_DATA);
-
     }
 }
 
