@@ -23,26 +23,23 @@ public class Task2 {
             return;
         }
 
-        HashSet<Integer> mySet = new HashSet<>();
-        int secondNumber;
+        int indexOfSecNum;
+        Arrays.sort(array);
 
-        for (int firstNumber : array) {
-            secondNumber = sum - firstNumber;
-            if (mySet.contains(secondNumber)) {
-                System.out.println("[" + firstNumber + ", " + secondNumber + "]");
+        for (int i = 0; i < array.length; i++) {
+            indexOfSecNum = Arrays.binarySearch(array, i + 1, array.length, sum - array[i]);
+            if (indexOfSecNum > 0) {
+                System.out.println("[" + array[i] + ", " + array[indexOfSecNum] + "]");
                 return;
             }
-            mySet.add(secondNumber);
         }
 
         System.out.println("[]"); // в случае если искомой пары нет
-
-
     }
 
 
     public static void main(String[] args) {
-        int[] arr = {3, 4, 2, 7};
-        twoNumbersWithSum(arr, 10);
+        int[] arr1 = {3, 4, 2, 7};
+        twoNumbersWithSum(arr1, 10);
     }
 }
